@@ -1,6 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import { print } from 'graphql';
-import { gql } from '@apollo/client';
+import { GraphQLError } from 'graphql-request/dist/types';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -1317,51 +1318,543 @@ export type CandidateProfileWorkPlaceInput = {
 };
 
 
-export type ReviewCandidateProfileMutationVariables = Exact<{
-  id: Scalars['Int'];
-  status: CandidateProfileStatus;
-  rejectReason?: Maybe<Scalars['String']>;
+export type CandidateProfileFullFragment = (
+  { __typename?: 'CandidateProfile' }
+  & CandidateProfileBaseFragment
+  & CandidateProfileTechnologiesFragment
+  & CandidateProfileEnglishLevelFragment
+  & CandidateProfileJobExperienceFragment
+  & CandidateProfileEmploymentTypesFragment
+  & CandidateProfileSpecializationsFragment
+  & CandidateProfileCitiesFragment
+  & CandidateProfileWorkPlacesFragment
+);
+
+export type CandidateProfileBaseFragment = (
+  { __typename?: 'CandidateProfile' }
+  & Pick<CandidateProfile, 'id' | 'userId' | 'status' | 'rejectReason' | 'position' | 'salary' | 'candidateDescription' | 'experienceDescription' | 'workExpectations' | 'achievements' | 'slug' | 'lastActionTime'>
+);
+
+export type CandidateProfileCitiesFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { cities?: Maybe<Array<(
+    { __typename?: 'CandidateProfileCity' }
+    & CandidateProfileCityBaseFragment
+  )>> }
+);
+
+export type CandidateProfileEmploymentTypesFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { employmentTypes?: Maybe<Array<(
+    { __typename?: 'EmploymentType' }
+    & EmploymentTypeBaseFragment
+  )>> }
+);
+
+export type CandidateProfileEnglishLevelFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { englishLevel?: Maybe<(
+    { __typename?: 'EnglishLevel' }
+    & EnglishLevelBaseFragment
+  )> }
+);
+
+export type CandidateProfileJobExperienceFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { jobExperience?: Maybe<(
+    { __typename?: 'JobExperience' }
+    & JobExperienceBaseFragment
+  )> }
+);
+
+export type CandidateProfileSpecializationsFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { specializations?: Maybe<Array<(
+    { __typename?: 'Specialization' }
+    & SpecializationBaseFragment
+  )>> }
+);
+
+export type CandidateProfileTechnologiesFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { technologies?: Maybe<Array<(
+    { __typename?: 'Technology' }
+    & TechnologyBaseFragment
+  )>> }
+);
+
+export type CandidateProfileWorkPlacesFragment = (
+  { __typename?: 'CandidateProfile' }
+  & { workPlaces?: Maybe<Array<(
+    { __typename?: 'CandidateProfileWorkPlace' }
+    & WorkPlaceBaseFragment
+  )>> }
+);
+
+export type CandidateProfilesBySubscriptionQueryVariables = Exact<{
+  subscriptionLastInteract: Scalars['GraphQLDateTime'];
+  where: PublicProfilesParameters;
 }>;
 
 
-export type ReviewCandidateProfileMutation = (
-  { __typename?: 'Mutation' }
-  & { reviewCandidateProfile: (
+export type CandidateProfilesBySubscriptionQuery = (
+  { __typename?: 'Query' }
+  & { candidateProfilesBySubscription: Array<(
     { __typename?: 'CandidateProfile' }
-    & Pick<CandidateProfile, 'id' | 'status'>
-  ) }
+    & CandidateProfileFullFragment
+  )> }
 );
 
-export type ReviewRecruiterProfileMutationVariables = Exact<{
-  id: Scalars['Int'];
-  status: RecruiterProfileStatus;
-  rejectReason?: Maybe<Scalars['String']>;
+export type DeactivateUnresponsiveProfilesMutationVariables = Exact<{
+  userIds?: Maybe<Array<Scalars['Int']>>;
 }>;
 
 
-export type ReviewRecruiterProfileMutation = (
+export type DeactivateUnresponsiveProfilesMutation = (
   { __typename?: 'Mutation' }
-  & { reviewRecruiterProfile: (
-    { __typename?: 'RecruiterProfile' }
-    & Pick<RecruiterProfile, 'id' | 'status'>
+  & Pick<Mutation, 'deactivateUnresponsiveProfiles'>
+);
+
+export type CandidateProfileCityBaseFragment = (
+  { __typename?: 'CandidateProfileCity' }
+  & Pick<CandidateProfileCity, 'id' | 'cityId' | 'cityName' | 'cityCountryName' | 'cityCountrySlug' | 'cityTimezone' | 'type'>
+);
+
+export type EmploymentLocationBaseFragment = (
+  { __typename?: 'EmploymentLocation' }
+  & Pick<EmploymentLocation, 'id' | 'slug'>
+);
+
+export type EmploymentTypeBaseFragment = (
+  { __typename?: 'EmploymentType' }
+  & Pick<EmploymentType, 'id' | 'slug'>
+);
+
+export type EnglishLevelBaseFragment = (
+  { __typename?: 'EnglishLevel' }
+  & Pick<EnglishLevel, 'id' | 'slug'>
+);
+
+export type JobExperienceBaseFragment = (
+  { __typename?: 'JobExperience' }
+  & Pick<JobExperience, 'id' | 'slug'>
+);
+
+export type RecruiterProfileBaseFragment = (
+  { __typename?: 'RecruiterProfile' }
+  & Pick<RecruiterProfile, 'id' | 'status' | 'rejectReason' | 'position' | 'companyName' | 'city' | 'slug' | 'lastActionTime' | 'statusesNotificationSentAt'>
+);
+
+export type UpdateStatusesNotificationTimeMutationVariables = Exact<{
+  profileIds: Array<Scalars['Int']>;
+}>;
+
+
+export type UpdateStatusesNotificationTimeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateStatusesNotificationTime'>
+);
+
+export type SpecializationBaseFragment = (
+  { __typename?: 'Specialization' }
+  & Pick<Specialization, 'id' | 'name'>
+);
+
+export type TechnologyBaseFragment = (
+  { __typename?: 'Technology' }
+  & Pick<Technology, 'id' | 'name'>
+);
+
+export type UsersByPendingConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersByPendingConnectionsQuery = (
+  { __typename?: 'Query' }
+  & { usersByPendingConnections?: Maybe<Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'lastActionTime' | 'firstName' | 'lastName'>
+    & { recruiterProfiles?: Maybe<Array<(
+      { __typename?: 'RecruiterProfile' }
+      & RecruiterProfileBaseFragment
+    )>> }
+  )>> }
+);
+
+export type UsersWithChurnedCandidateProfilesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersWithChurnedCandidateProfilesQuery = (
+  { __typename?: 'Query' }
+  & { usersWithChurnedCandidateProfiles?: Maybe<Array<(
+    { __typename?: 'ChurnedUser' }
+    & Pick<ChurnedUser, 'id' | 'firstName' | 'email' | 'profilesCount' | 'profileId' | 'slug' | 'profileCreatedAt'>
+  )>> }
+);
+
+export type UsersSearchSubscriptionFullFragment = (
+  { __typename?: 'UsersSearchSubscription' }
+  & UsersSearchSubscriptionBaseFragment
+  & UsersSearchSubscriptionParamsFragment
+  & UsersSearchSubscriptionUserFragment
+);
+
+export type UsersSearchSubscriptionBaseFragment = (
+  { __typename?: 'UsersSearchSubscription' }
+  & Pick<UsersSearchSubscription, 'id' | 'title' | 'userId' | 'lastUsed' | 'lastNotified'>
+);
+
+export type UsersSearchSubscriptionParamsFragment = (
+  { __typename?: 'UsersSearchSubscription' }
+  & { searchParams: (
+    { __typename?: 'CandidatesSearchParams' }
+    & Pick<CandidatesSearchParams, 'cities' | 'countries' | 'specializations' | 'salaryFrom' | 'salaryTo' | 'timezoneFrom' | 'timezoneTo' | 'timezoneReverseMode' | 'searchQuery' | 'experienceIds' | 'englishLevelIds' | 'employmentTypesIds' | 'technologiesIds'>
   ) }
 );
 
+export type UsersSearchSubscriptionUserFragment = (
+  { __typename?: 'UsersSearchSubscription' }
+  & { user?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'email'>
+  )> }
+);
 
-export const ReviewCandidateProfileDocument = /*#__PURE__*/ gql`
-    mutation reviewCandidateProfile($id: Int!, $status: CandidateProfileStatus!, $rejectReason: String) {
-  reviewCandidateProfile(id: $id, status: $status, rejectReason: $rejectReason) {
-    id
-    status
+export type UpdateSubscriptionLastNotifiedMutationVariables = Exact<{
+  subscriptionsIds?: Maybe<Array<Scalars['Int']>>;
+}>;
+
+
+export type UpdateSubscriptionLastNotifiedMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateSubscriptionLastNotified'>
+);
+
+export type UsersSearchSubscriptionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersSearchSubscriptionsQuery = (
+  { __typename?: 'Query' }
+  & { usersSearchSubscriptions?: Maybe<Array<(
+    { __typename?: 'UsersSearchSubscription' }
+    & UsersSearchSubscriptionFullFragment
+  )>> }
+);
+
+export type VacanciesSourceBaseFragment = (
+  { __typename?: 'VacanciesSource' }
+  & Pick<VacanciesSource, 'id' | 'userId' | 'url'>
+);
+
+export type VacanciesSourcesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VacanciesSourcesQuery = (
+  { __typename?: 'Query' }
+  & { vacanciesSources?: Maybe<Array<(
+    { __typename?: 'VacanciesSource' }
+    & VacanciesSourceBaseFragment
+  )>> }
+);
+
+export type CreateSourcedVacanciesMutationVariables = Exact<{
+  vacancies?: Maybe<Array<SourcedVacancy>>;
+}>;
+
+
+export type CreateSourcedVacanciesMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'createSourcedVacancies'>
+);
+
+export type DeleteObsoleteSourcedVacanciesMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteObsoleteSourcedVacanciesMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteObsoleteSourcedVacancies'>
+);
+
+export type WorkPlaceBaseFragment = (
+  { __typename?: 'CandidateProfileWorkPlace' }
+  & Pick<CandidateProfileWorkPlace, 'id' | 'companyName' | 'title' | 'description' | 'startDate' | 'endDate'>
+);
+
+export const CandidateProfileBaseFragmentDoc = gql`
+    fragment CandidateProfileBase on CandidateProfile {
+  id
+  userId
+  status
+  rejectReason
+  position
+  salary
+  candidateDescription
+  experienceDescription
+  workExpectations
+  achievements
+  slug
+  lastActionTime
+}
+    `;
+export const TechnologyBaseFragmentDoc = gql`
+    fragment TechnologyBase on Technology {
+  id
+  name
+}
+    `;
+export const CandidateProfileTechnologiesFragmentDoc = gql`
+    fragment CandidateProfileTechnologies on CandidateProfile {
+  technologies {
+    ...TechnologyBase
+  }
+}
+    ${TechnologyBaseFragmentDoc}`;
+export const EnglishLevelBaseFragmentDoc = gql`
+    fragment EnglishLevelBase on EnglishLevel {
+  id
+  slug
+}
+    `;
+export const CandidateProfileEnglishLevelFragmentDoc = gql`
+    fragment CandidateProfileEnglishLevel on CandidateProfile {
+  englishLevel {
+    ...EnglishLevelBase
+  }
+}
+    ${EnglishLevelBaseFragmentDoc}`;
+export const JobExperienceBaseFragmentDoc = gql`
+    fragment JobExperienceBase on JobExperience {
+  id
+  slug
+}
+    `;
+export const CandidateProfileJobExperienceFragmentDoc = gql`
+    fragment CandidateProfileJobExperience on CandidateProfile {
+  jobExperience {
+    ...JobExperienceBase
+  }
+}
+    ${JobExperienceBaseFragmentDoc}`;
+export const EmploymentTypeBaseFragmentDoc = gql`
+    fragment EmploymentTypeBase on EmploymentType {
+  id
+  slug
+}
+    `;
+export const CandidateProfileEmploymentTypesFragmentDoc = gql`
+    fragment CandidateProfileEmploymentTypes on CandidateProfile {
+  employmentTypes {
+    ...EmploymentTypeBase
+  }
+}
+    ${EmploymentTypeBaseFragmentDoc}`;
+export const SpecializationBaseFragmentDoc = gql`
+    fragment SpecializationBase on Specialization {
+  id
+  name
+}
+    `;
+export const CandidateProfileSpecializationsFragmentDoc = gql`
+    fragment CandidateProfileSpecializations on CandidateProfile {
+  specializations {
+    ...SpecializationBase
+  }
+}
+    ${SpecializationBaseFragmentDoc}`;
+export const CandidateProfileCityBaseFragmentDoc = gql`
+    fragment CandidateProfileCityBase on CandidateProfileCity {
+  id
+  cityId
+  cityName
+  cityCountryName
+  cityCountrySlug
+  cityTimezone
+  type
+}
+    `;
+export const CandidateProfileCitiesFragmentDoc = gql`
+    fragment CandidateProfileCities on CandidateProfile {
+  cities {
+    ...CandidateProfileCityBase
+  }
+}
+    ${CandidateProfileCityBaseFragmentDoc}`;
+export const WorkPlaceBaseFragmentDoc = gql`
+    fragment WorkPlaceBase on CandidateProfileWorkPlace {
+  id
+  companyName
+  title
+  description
+  startDate
+  endDate
+}
+    `;
+export const CandidateProfileWorkPlacesFragmentDoc = gql`
+    fragment CandidateProfileWorkPlaces on CandidateProfile {
+  workPlaces {
+    ...WorkPlaceBase
+  }
+}
+    ${WorkPlaceBaseFragmentDoc}`;
+export const CandidateProfileFullFragmentDoc = gql`
+    fragment CandidateProfileFull on CandidateProfile {
+  ...CandidateProfileBase
+  ...CandidateProfileTechnologies
+  ...CandidateProfileEnglishLevel
+  ...CandidateProfileJobExperience
+  ...CandidateProfileEmploymentTypes
+  ...CandidateProfileSpecializations
+  ...CandidateProfileCities
+  ...CandidateProfileWorkPlaces
+}
+    ${CandidateProfileBaseFragmentDoc}
+${CandidateProfileTechnologiesFragmentDoc}
+${CandidateProfileEnglishLevelFragmentDoc}
+${CandidateProfileJobExperienceFragmentDoc}
+${CandidateProfileEmploymentTypesFragmentDoc}
+${CandidateProfileSpecializationsFragmentDoc}
+${CandidateProfileCitiesFragmentDoc}
+${CandidateProfileWorkPlacesFragmentDoc}`;
+export const EmploymentLocationBaseFragmentDoc = gql`
+    fragment EmploymentLocationBase on EmploymentLocation {
+  id
+  slug
+}
+    `;
+export const RecruiterProfileBaseFragmentDoc = gql`
+    fragment RecruiterProfileBase on RecruiterProfile {
+  id
+  status
+  rejectReason
+  position
+  companyName
+  city
+  slug
+  lastActionTime
+  statusesNotificationSentAt
+}
+    `;
+export const UsersSearchSubscriptionBaseFragmentDoc = gql`
+    fragment UsersSearchSubscriptionBase on UsersSearchSubscription {
+  id
+  title
+  userId
+  lastUsed
+  lastNotified
+}
+    `;
+export const UsersSearchSubscriptionParamsFragmentDoc = gql`
+    fragment UsersSearchSubscriptionParams on UsersSearchSubscription {
+  searchParams {
+    cities
+    countries
+    specializations
+    salaryFrom
+    salaryTo
+    timezoneFrom
+    timezoneTo
+    timezoneReverseMode
+    searchQuery
+    experienceIds
+    englishLevelIds
+    employmentTypesIds
+    technologiesIds
   }
 }
     `;
-export const ReviewRecruiterProfileDocument = /*#__PURE__*/ gql`
-    mutation reviewRecruiterProfile($id: Int!, $status: RecruiterProfileStatus!, $rejectReason: String) {
-  reviewRecruiterProfile(id: $id, status: $status, rejectReason: $rejectReason) {
-    id
-    status
+export const UsersSearchSubscriptionUserFragmentDoc = gql`
+    fragment UsersSearchSubscriptionUser on UsersSearchSubscription {
+  user {
+    email
   }
+}
+    `;
+export const UsersSearchSubscriptionFullFragmentDoc = gql`
+    fragment UsersSearchSubscriptionFull on UsersSearchSubscription {
+  ...UsersSearchSubscriptionBase
+  ...UsersSearchSubscriptionParams
+  ...UsersSearchSubscriptionUser
+}
+    ${UsersSearchSubscriptionBaseFragmentDoc}
+${UsersSearchSubscriptionParamsFragmentDoc}
+${UsersSearchSubscriptionUserFragmentDoc}`;
+export const VacanciesSourceBaseFragmentDoc = gql`
+    fragment VacanciesSourceBase on VacanciesSource {
+  id
+  userId
+  url
+}
+    `;
+export const CandidateProfilesBySubscriptionDocument = gql`
+    query candidateProfilesBySubscription($subscriptionLastInteract: GraphQLDateTime!, $where: PublicProfilesParameters!) {
+  candidateProfilesBySubscription(subscriptionLastInteract: $subscriptionLastInteract, where: $where) {
+    ...CandidateProfileFull
+  }
+}
+    ${CandidateProfileFullFragmentDoc}`;
+export const DeactivateUnresponsiveProfilesDocument = gql`
+    mutation deactivateUnresponsiveProfiles($userIds: [Int!]) {
+  deactivateUnresponsiveProfiles(userIds: $userIds)
+}
+    `;
+export const UpdateStatusesNotificationTimeDocument = gql`
+    mutation updateStatusesNotificationTime($profileIds: [Int!]!) {
+  updateStatusesNotificationTime(profileIds: $profileIds)
+}
+    `;
+export const UsersByPendingConnectionsDocument = gql`
+    query usersByPendingConnections {
+  usersByPendingConnections {
+    id
+    email
+    lastActionTime
+    firstName
+    lastName
+    recruiterProfiles {
+      ...RecruiterProfileBase
+    }
+  }
+}
+    ${RecruiterProfileBaseFragmentDoc}`;
+export const UsersWithChurnedCandidateProfilesDocument = gql`
+    query usersWithChurnedCandidateProfiles {
+  usersWithChurnedCandidateProfiles {
+    id
+    firstName
+    email
+    profilesCount
+    profileId
+    slug
+    profileCreatedAt
+  }
+}
+    `;
+export const UpdateSubscriptionLastNotifiedDocument = gql`
+    mutation updateSubscriptionLastNotified($subscriptionsIds: [Int!]) {
+  updateSubscriptionLastNotified(subscriptionsIds: $subscriptionsIds)
+}
+    `;
+export const UsersSearchSubscriptionsDocument = gql`
+    query usersSearchSubscriptions {
+  usersSearchSubscriptions {
+    ...UsersSearchSubscriptionFull
+  }
+}
+    ${UsersSearchSubscriptionFullFragmentDoc}`;
+export const VacanciesSourcesDocument = gql`
+    query vacanciesSources {
+  vacanciesSources {
+    ...VacanciesSourceBase
+  }
+}
+    ${VacanciesSourceBaseFragmentDoc}`;
+export const CreateSourcedVacanciesDocument = gql`
+    mutation createSourcedVacancies($vacancies: [SourcedVacancy!]) {
+  createSourcedVacancies(vacancies: $vacancies)
+}
+    `;
+export const DeleteObsoleteSourcedVacanciesDocument = gql`
+    mutation deleteObsoleteSourcedVacancies {
+  deleteObsoleteSourcedVacancies
 }
     `;
 
@@ -1371,11 +1864,35 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    reviewCandidateProfile(variables: ReviewCandidateProfileMutationVariables): Promise<ReviewCandidateProfileMutation> {
-      return withWrapper(() => client.request<ReviewCandidateProfileMutation>(print(ReviewCandidateProfileDocument), variables));
+    candidateProfilesBySubscription(variables: CandidateProfilesBySubscriptionQueryVariables): Promise<{ data?: CandidateProfilesBySubscriptionQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<CandidateProfilesBySubscriptionQuery>(print(CandidateProfilesBySubscriptionDocument), variables));
     },
-    reviewRecruiterProfile(variables: ReviewRecruiterProfileMutationVariables): Promise<ReviewRecruiterProfileMutation> {
-      return withWrapper(() => client.request<ReviewRecruiterProfileMutation>(print(ReviewRecruiterProfileDocument), variables));
+    deactivateUnresponsiveProfiles(variables?: DeactivateUnresponsiveProfilesMutationVariables): Promise<{ data?: DeactivateUnresponsiveProfilesMutation | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<DeactivateUnresponsiveProfilesMutation>(print(DeactivateUnresponsiveProfilesDocument), variables));
+    },
+    updateStatusesNotificationTime(variables: UpdateStatusesNotificationTimeMutationVariables): Promise<{ data?: UpdateStatusesNotificationTimeMutation | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<UpdateStatusesNotificationTimeMutation>(print(UpdateStatusesNotificationTimeDocument), variables));
+    },
+    usersByPendingConnections(variables?: UsersByPendingConnectionsQueryVariables): Promise<{ data?: UsersByPendingConnectionsQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<UsersByPendingConnectionsQuery>(print(UsersByPendingConnectionsDocument), variables));
+    },
+    usersWithChurnedCandidateProfiles(variables?: UsersWithChurnedCandidateProfilesQueryVariables): Promise<{ data?: UsersWithChurnedCandidateProfilesQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<UsersWithChurnedCandidateProfilesQuery>(print(UsersWithChurnedCandidateProfilesDocument), variables));
+    },
+    updateSubscriptionLastNotified(variables?: UpdateSubscriptionLastNotifiedMutationVariables): Promise<{ data?: UpdateSubscriptionLastNotifiedMutation | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<UpdateSubscriptionLastNotifiedMutation>(print(UpdateSubscriptionLastNotifiedDocument), variables));
+    },
+    usersSearchSubscriptions(variables?: UsersSearchSubscriptionsQueryVariables): Promise<{ data?: UsersSearchSubscriptionsQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<UsersSearchSubscriptionsQuery>(print(UsersSearchSubscriptionsDocument), variables));
+    },
+    vacanciesSources(variables?: VacanciesSourcesQueryVariables): Promise<{ data?: VacanciesSourcesQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<VacanciesSourcesQuery>(print(VacanciesSourcesDocument), variables));
+    },
+    createSourcedVacancies(variables?: CreateSourcedVacanciesMutationVariables): Promise<{ data?: CreateSourcedVacanciesMutation | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<CreateSourcedVacanciesMutation>(print(CreateSourcedVacanciesDocument), variables));
+    },
+    deleteObsoleteSourcedVacancies(variables?: DeleteObsoleteSourcedVacanciesMutationVariables): Promise<{ data?: DeleteObsoleteSourcedVacanciesMutation | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper(() => client.rawRequest<DeleteObsoleteSourcedVacanciesMutation>(print(DeleteObsoleteSourcedVacanciesDocument), variables));
     }
   };
 }

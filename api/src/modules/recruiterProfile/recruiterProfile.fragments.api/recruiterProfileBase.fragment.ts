@@ -7,6 +7,7 @@ export const RECRUITER_PROFILE_BASE_FRAGMENT = gql`
     rejectReason
     position
     companyName
+    city
     slug
     lastActionTime
   }
