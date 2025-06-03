@@ -1609,6 +1609,7 @@ export type SendRecruiterProfileToReviewMutation = (
 export type UpdateRecruiterProfileMutationVariables = Exact<{
   position?: Maybe<Scalars['String']>;
   companyName?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -2357,8 +2358,8 @@ export const SendRecruiterProfileToReviewDocument = gql`
 }
     ${RecruiterProfileBaseFragmentDoc}`;
 export const UpdateRecruiterProfileDocument = gql`
-    mutation updateRecruiterProfile($position: String, $companyName: String) {
-  updateRecruiterProfile(position: $position, companyName: $companyName) {
+    mutation updateRecruiterProfile($position: String, $companyName: String, $city: String) {
+  updateRecruiterProfile(position: $position, companyName: $companyName, city: $city) {
     ...RecruiterProfileBase
   }
 }

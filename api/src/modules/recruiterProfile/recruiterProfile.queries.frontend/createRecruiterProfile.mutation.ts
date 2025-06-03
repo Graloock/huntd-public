@@ -6,11 +6,13 @@ export const CREATE_RECRUITER_PROFILE_MUTATION = gql`
     $userId: Int!
     $position: String!
     $companyName: String!
+    $city: String!
   ) {
     createRecruiterProfile(
       userId: $userId
       position: $position
       companyName: $companyName
+      city: $city
     ) {
       ...RecruiterProfileBase
     }

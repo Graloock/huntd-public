@@ -2,7 +2,7 @@
 
 const table = 'recruiter_profiles';
 
-const user_id = 775;
+const user_id = 774;
 const city = 'Kyiv';
 
 module.exports = {

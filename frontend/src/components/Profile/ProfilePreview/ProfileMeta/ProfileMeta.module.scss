@@ -33,6 +33,11 @@
 }
 
 .recruiterMetaItem {
+  @include icon-styles {
+    width: 24px;
+    height: 24px;
+  }
+
   @extend .baseItem;
   display: inline-block;
   @include text-truncate;

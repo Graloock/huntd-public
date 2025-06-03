@@ -16,8 +16,7 @@ interface UseRecruiterProfileMetaItems {
 }
 export const useRecruiterProfileMetaItems: UseRecruiterProfileMetaItems = (
   profile
-) =>
-  useMemo(() => {
+) => useMemo(() => {
     if (!profile) {
       return [];
     }

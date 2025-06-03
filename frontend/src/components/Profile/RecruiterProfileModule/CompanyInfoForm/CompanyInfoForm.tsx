@@ -49,18 +49,20 @@ export const CompanyInfoForm = () => {
   ]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const { position, companyName } = data;
+    const { position, companyName, city } = data;
 
     try {
       await updateProfile({
         variables: {
           position,
           companyName,
+          city,
         },
         async update() {
           analytics.setUserProperties({
             primaryProfile: PrimaryProfile.Recruiter,
             companyName,
+            city,
           });
 
           if (isFirstTimeFillingProfile) {
@@ -110,7 +112,7 @@ export const CompanyInfoForm = () => {
           <div className="grid-container">
 
             <div className="grid-x grid-margin-x">
-              <div className="cell large-3 large-offset-3">
+              <div className="cell large-6 large-offset-3">
 
                 <FormField
                   label={{
@@ -138,7 +140,7 @@ export const CompanyInfoForm = () => {
                 />
               </div>
 
-              <div className="cell large-3">
+              <div className="cell large-3 large-offset-3">
                 <FormField
                   label={{
                     for: 'companyName',
@@ -146,7 +148,7 @@ export const CompanyInfoForm = () => {
                   }}
                   error={errors.companyName}
                   disabled={loading}
-                  className="mb-40"
+                  className="mb-24"
                   renderInput={(props) => (
                     <InputText
                       {...props}
@@ -158,6 +160,33 @@ export const CompanyInfoForm = () => {
                         required: {
                           value: true,
                           message: 'company_is_required',
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="cell large-3">
+                <FormField
+                  label={{
+                    for: 'city',
+                    text: t(`${Namespaces.Form}:city_label`),
+                  }}
+                  error={errors.city}
+                  disabled={loading}
+                  className="mb-40"
+                  renderInput={(props) => (
+                    <InputText
+                      {...props}
+                      defaultValue={profile?.city || ''}
+                      name="city"
+                      control={control}
+                      placeholder={t(`${Namespaces.Form}:city_label`)}
+                      validation={{
+                        required: {
+                          value: true,
+                          message: 'city_is_required',
                         },
                       }}
                     />

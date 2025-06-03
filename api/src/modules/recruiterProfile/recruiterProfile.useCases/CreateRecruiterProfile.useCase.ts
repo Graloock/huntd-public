@@ -7,6 +7,7 @@ export interface CreateRecruiterProfileUseCaseOptions {
   userId: number;
   position: string;
   companyName: string;
+  city: string;
 }
 export type CreateRecruiterProfileUseCaseResult = RecruiterProfile;
 
@@ -25,6 +26,7 @@ export class CreateRecruiterProfileUseCase extends AuthUseCase<
       userId: ['required', 'positive_integer'],
       position: ['required', 'string'],
       companyName: ['required', 'string'],
+      city: ['required', 'string'],
     };
   }
 

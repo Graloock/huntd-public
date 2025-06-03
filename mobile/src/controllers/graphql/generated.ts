@@ -1892,6 +1892,7 @@ export type SendRecruiterProfileToReviewMutation = (
 export type UpdateRecruiterProfileMutationVariables = Exact<{
   position?: Maybe<Scalars['String']>;
   companyName?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -3431,8 +3432,8 @@ export type SendRecruiterProfileToReviewMutationHookResult = ReturnType<typeof u
 export type SendRecruiterProfileToReviewMutationResult = Apollo.MutationResult<SendRecruiterProfileToReviewMutation>;
 export type SendRecruiterProfileToReviewMutationOptions = Apollo.BaseMutationOptions<SendRecruiterProfileToReviewMutation, SendRecruiterProfileToReviewMutationVariables>;
 export const UpdateRecruiterProfileDocument = /*#__PURE__*/ gql`
-    mutation updateRecruiterProfile($position: String, $companyName: String) {
-  updateRecruiterProfile(position: $position, companyName: $companyName) {
+    mutation updateRecruiterProfile($position: String, $companyName: String, $city: String) {
+  updateRecruiterProfile(position: $position, companyName: $companyName, city: $city) {
     ...RecruiterProfileBase
   }
 }
@@ -3454,6 +3455,7 @@ export type UpdateRecruiterProfileMutationFn = Apollo.MutationFunction<UpdateRec
  *   variables: {
  *      position: // value for 'position'
  *      companyName: // value for 'companyName'
+ *      city: // value for 'city'
  *   },
  * });
  */

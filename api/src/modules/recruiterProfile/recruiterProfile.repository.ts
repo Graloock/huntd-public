@@ -34,13 +34,15 @@ export class RecruiterProfileRepository extends Repository {
     userId: number,
     position: string,
     companyName: string,
+    city: string,
   }) {
-    const { userId, position, companyName } = options;
+    const { userId, position, companyName, city } = options;
 
     return this.models.RecruiterProfile.create({
       userId,
       position,
       companyName,
+      city,
       status: RecruiterProfileStatusEnum.Inactive,
     });
   }

@@ -85,6 +85,7 @@ export class ActivateRecruiterProfileUseCase extends AuthUseCase<
         slug: profile.slug,
         status: RecruiterProfileStatusEnum.Active,
         companyName: profile.companyName,
+        city: profile.city,
       },
     });
 
